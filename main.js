@@ -9,11 +9,25 @@ menus.forEach((menu) =>
 let url = new URL(`https://genuine-llama-77c90b.netlify.app/top-headlines?country=kr&apiKey=${API_KEY}`) //전역변수
 
 const getNews =async()=>{
-  const response = await fetch(url);
-  const data = await response.json();
-  newsList = data.articles;
-  render();
-}
+  try{
+    const response = await fetch(url);
+
+    const data = await response.json();
+    if(response.status===200){
+      if(data.articles.length===0){
+        throw new Error("No result for search");
+      }
+      newsList = data.articles;
+      render();
+    }else{
+      throw new Error(data.message);
+    }
+
+  }catch(error){
+    errorRender(error.message)
+  }
+
+};
 
 
 const getLatestNews = async() => {
@@ -79,5 +93,12 @@ const openNav = () => {
   const closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
   };
+
+const errorRender = (errorMessage)=>{
+const errorHTML = `<div class="alert alert-danger" role="alert">
+ ${errorMessage}
+</div>`;
+document.getElementById("news-board").innerHTML=errorHTML
+};
 
 getLatestNews();
