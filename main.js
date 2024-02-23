@@ -29,7 +29,7 @@ const getNewsByKeyword = async() =>{
   const keyword = document.getElementById("search-input").value;
   url = new URL(
     //`https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
-    `https://genuine-llama-77c90b.netlify.app/top-headlines?country=kr&a=${keyword}&piKey=${API_KEY}`
+    `https://genuine-llama-77c90b.netlify.app/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
   );
   getNews();
 };
